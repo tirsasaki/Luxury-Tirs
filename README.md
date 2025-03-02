@@ -90,7 +90,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔗 Links
 
-- Website: [luxurytirs.netlify.app/](https://luxurytirs.netlify.app/)
+- Website: [luxurytirs.netlify.app/](https://luxurytirs.netlify.app)
 - GitHub: [github.com/tirsasaki/Luxury-Tirs](https://github.com/tirsasaki/Luxury-Tirs)
 - Developer: [tirsasaki.web.id](https://tirsasaki.web.id)
 

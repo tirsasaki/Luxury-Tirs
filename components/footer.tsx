@@ -128,10 +128,29 @@ const FooterLink = styled.li`
   }
 `
 
-const Copyright = styled.p`
+const Copyright = styled.div`
   font-size: 0.9rem;
   color: ${(props) => props.theme.colors.white};
   opacity: 0.7;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  
+  svg {
+    color: ${props => props.theme.colors.red};
+    margin: 0 4px;
+    animation: pulse 1.5s ease infinite;
+  }
+
+  a {
+    color: ${props => props.theme.colors.white};
+    text-decoration: none;
+    transition: color 0.3s ease;
+    
+    &:hover {
+      color: ${props => props.theme.colors.red};
+    }
+  }
 `
 
 const FooterButton = styled(motion.a)`
@@ -149,13 +168,38 @@ const FooterButton = styled(motion.a)`
   }
 `
 
+const DevelopedBy = styled.p`
+  text-align: center;
+  color: ${props => props.theme.colors.white};
+  opacity: 0.8;
+  font-size: 0.9rem;
+  margin-top: 2rem;
+  
+  svg {
+    color: ${props => props.theme.colors.red};
+    display: inline-block;
+    margin: 0 4px;
+    animation: pulse 1.5s ease infinite;
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }
+`
+
 export default function Footer() {
   return (
     <FooterSection>
       <FooterContainer>
         <FooterTop>
           <FooterColumn>
-            <FooterLogo initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
+            <FooterLogo 
+              initial={{ opacity: 0, y: 20 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ duration: 0.5 }}
+            >
               LUXURY<span>TIRS</span>
             </FooterLogo>
 
@@ -167,15 +211,12 @@ export default function Footer() {
               <SocialLink href="#" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                 <Facebook size={18} />
               </SocialLink>
-
               <SocialLink href="#" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                 <Twitter size={18} />
               </SocialLink>
-
               <SocialLink href="#" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                 <Instagram size={18} />
               </SocialLink>
-
               <SocialLink href="#" whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                 <Linkedin size={18} />
               </SocialLink>
@@ -245,7 +286,13 @@ export default function Footer() {
         </FooterTop>
 
         <FooterBottom>
-          <Copyright>&copy; {new Date().getFullYear()} Luxury Tirs. All rights reserved.</Copyright>
+          <Copyright>
+            &copy; {new Date().getFullYear()} Luxury Tirs. Developed with 
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+            </svg>
+            by <a href="https://tirsasaki.web.id" target="_blank" rel="noopener noreferrer">Tirsasaki</a>
+          </Copyright>
 
           <div>
             <a href="#" style={{ fontSize: "0.9rem", color: "white", opacity: 0.7, marginRight: "20px" }}>

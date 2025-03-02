@@ -2,7 +2,7 @@
 
 A modern and elegant personal branding website built with Next.js 14 and styled-components, featuring stunning animations and a responsive design.
 
-![Luxury Tirs](https://github.com/tirsasaki/Luxury-Tirs/raw/main/public/preview.png)
+![Luxury Tirs](https://github.com/tirsasaki/Luxury-Tirs/raw/main/public/luxurytirs.png)
 
 ## ✨ Features
 

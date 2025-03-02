@@ -3,6 +3,7 @@ import StyledComponentsRegistry from "@/lib/registry"
 import { ThemeProvider } from "@/providers/ThemeProvider"
 import "./globals.css"
 import type { Metadata } from "next"
+import BackToTop from "@/components/BackToTop"
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -27,6 +28,7 @@ export default function RootLayout({
         <StyledComponentsRegistry>
           <ThemeProvider>
             {children}
+            <BackToTop />
           </ThemeProvider>
         </StyledComponentsRegistry>
       </body>

@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/providers/ThemeProvider"
 import "./globals.css"
 import type { Metadata } from "next"
 import BackToTop from "@/components/BackToTop"
+import Navbar from "@/components/Navbar"
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -27,6 +28,7 @@ export default function RootLayout({
       <body className={montserrat.className}>
         <StyledComponentsRegistry>
           <ThemeProvider>
+            <Navbar />
             {children}
             <BackToTop />
           </ThemeProvider>

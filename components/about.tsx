@@ -1,179 +1,308 @@
 "use client"
 
 import styled from "styled-components"
-import { motion } from "framer-motion"
-import { useInView } from "framer-motion"
-import { useRef } from "react"
+import { motion, useScroll, useTransform } from "framer-motion"
+import { Code, Palette, Globe, Trophy } from "lucide-react"
 
 const AboutSection = styled.section`
-  background-color: ${(props) => props.theme.colors.black};
+  min-height: 100vh;
+  background: ${props => props.theme.colors.black};
+  padding: 100px 20px;
   position: relative;
   overflow: hidden;
 `
 
-const AboutContainer = styled.div`
+const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
+`
+
+const Grid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
   align-items: center;
-  
-  @media (max-width: 768px) {
+
+  @media (max-width: 968px) {
     grid-template-columns: 1fr;
-    gap: 40px;
+    text-align: center;
   }
 `
 
-const AboutContent = styled.div`
-  position: relative;
-  z-index: 2;
+const ContentWrapper = styled(motion.div)`
+  color: ${props => props.theme.colors.white};
 `
 
-const SectionTitle = styled(motion.h2)`
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  color: ${(props) => props.theme.colors.white};
-  position: relative;
-  display: inline-block;
+const Title = styled(motion.h2)`
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
   
-  &:after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 0;
-    width: 60px;
-    height: 4px;
-    background-color: ${(props) => props.theme.colors.red};
+  span {
+    color: ${props => props.theme.colors.red};
   }
 `
 
-const AboutText = styled(motion.p)`
+const Description = styled(motion.p)`
   font-size: 1.1rem;
   line-height: 1.8;
-  margin-bottom: 30px;
-  color: ${(props) => props.theme.colors.white};
   opacity: 0.8;
+  margin-bottom: 2rem;
 `
 
-const AboutImage = styled(motion.div)`
+const StatsGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-top: 40px;
+
+  @media (max-width: 968px) {
+    justify-content: center;
+  }
+`
+
+const StatBox = styled(motion.div)`
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  h3 {
+    font-size: 2.5rem;
+    color: ${props => props.theme.colors.red};
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+    opacity: 0.7;
+  }
+`
+
+const ImageWrapper = styled(motion.div)`
   position: relative;
-  height: 500px;
   
   &:before {
     content: '';
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: -20px;
+    left: -20px;
     right: -20px;
     bottom: -20px;
-    border: 2px solid ${(props) => props.theme.colors.militaryGreen};
-    z-index: 1;
+    border: 2px solid ${props => props.theme.colors.red};
+    opacity: 0.1;
+    border-radius: 20px;
+  }
+`
+
+const Image = styled(motion.div)`
+  width: 100%;
+  height: 500px;
+  background: linear-gradient(
+    45deg,
+    ${props => props.theme.colors.red}22,
+    ${props => props.theme.colors.darkBlue}22
+  );
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      45deg,
+      transparent,
+      rgba(255, 255, 255, 0.1)
+    );
+  }
+`
+
+const FeatureList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 30px;
+`
+
+const FeatureItem = styled(motion.div)`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  
+  svg {
+    color: ${props => props.theme.colors.red};
   }
   
-  img {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  p {
+    font-size: 1rem;
+    opacity: 0.8;
   }
-  
+`
+
+const Highlight = styled.span`
+  color: ${props => props.theme.colors.red};
+  font-weight: 700;
+`
+
+const SubHeading = styled(motion.h3)`
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: ${props => props.theme.colors.red};
+  margin-bottom: 1rem;
+  opacity: 0.9;
+`
+
+const BrandingGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin: 40px 0;
+
   @media (max-width: 768px) {
-    height: 350px;
+    grid-template-columns: 1fr;
   }
 `
 
-const HighlightText = styled.span`
-  color: ${(props) => props.theme.colors.red};
-  font-weight: 600;
-`
+const BrandingCard = styled(motion.div)`
+  background: rgba(255, 255, 255, 0.03);
+  padding: 25px;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
 
-const AccentShape = styled(motion.div)`
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  background-color: ${(props) => props.theme.colors.darkBlue};
-  opacity: 0.1;
-  border-radius: 50%;
-  z-index: 1;
-  filter: blur(60px);
+  h4 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: ${props => props.theme.colors.white};
+  }
+
+  p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    opacity: 0.7;
+  }
 `
 
 export default function About() {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: false, amount: 0.3 })
+  const { scrollYProgress } = useScroll()
+  const y = useTransform(scrollYProgress, [0, 1], [100, -100])
+
+  const brandingPoints = [
+    {
+      title: "Innovative Design",
+      description: "Merging cutting-edge aesthetics with functional excellence to create unique digital experiences that stand out."
+    },
+    {
+      title: "Strategic Vision",
+      description: "Crafting compelling brand narratives that resonate with your audience and drive meaningful engagement."
+    },
+    {
+      title: "Digital Excellence",
+      description: "Leveraging advanced technologies to build powerful, future-proof digital solutions."
+    }
+  ]
 
   return (
-    <AboutSection id="about" ref={ref}>
-      <AccentShape
-        style={{ top: "20%", right: "10%" }}
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.1, 0.2, 0.1],
-        }}
-        transition={{ duration: 8, repeat: Number.POSITIVE_INFINITY }}
-      />
-
-      <AccentShape
-        style={{ bottom: "10%", left: "5%" }}
-        animate={{
-          scale: [1, 1.3, 1],
-          opacity: [0.1, 0.15, 0.1],
-        }}
-        transition={{ duration: 10, repeat: Number.POSITIVE_INFINITY }}
-      />
-
-      <AboutContainer>
-        <AboutContent>
-          <SectionTitle
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
-            transition={{ duration: 0.6 }}
+    <AboutSection id="about">
+      <Container>
+        <Grid>
+          <ContentWrapper
+            initial={{ opacity: 0, x: -100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
           >
-            About Luxury Tirs
-          </SectionTitle>
+            <SubHeading
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              About Us
+            </SubHeading>
+            
+            <Title>
+              Elevating Digital <span>Presence</span>
+            </Title>
 
-          <AboutText
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            <Description>
+              At <Highlight>Luxury Tirs</Highlight>, we believe in transforming digital visions into extraordinary realities. Our mission is to craft distinctive digital experiences that capture attention, drive engagement, and create lasting impact in the digital landscape.
+            </Description>
+
+            <BrandingGrid>
+              {brandingPoints.map((point, index) => (
+                <BrandingCard
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.2 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -5, transition: { duration: 0.2 } }}
+                >
+                  <h4>{point.title}</h4>
+                  <p>{point.description}</p>
+                </BrandingCard>
+              ))}
+            </BrandingGrid>
+
+            <FeatureList>
+              {[
+                { icon: <Code size={24} />, text: "Modern Development" },
+                { icon: <Palette size={24} />, text: "Premium Design" },
+                { icon: <Globe size={24} />, text: "Global Standards" },
+                { icon: <Trophy size={24} />, text: "Award-Winning Work" }
+              ].map((feature, index) => (
+                <FeatureItem
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.2 }}
+                  viewport={{ once: true }}
+                >
+                  {feature.icon}
+                  <p>{feature.text}</p>
+                </FeatureItem>
+              ))}
+            </FeatureList>
+
+            <StatsGrid>
+              {[
+                { number: "100%", text: "Client Satisfaction" },
+                { number: "50+", text: "Premium Projects" },
+                { number: "24/7", text: "Support Service" },
+                { number: "10+", text: "Industry Awards" }
+              ].map((stat, index) => (
+                <StatBox
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -5 }}
+                >
+                  <h3>{stat.number}</h3>
+                  <p>{stat.text}</p>
+                </StatBox>
+              ))}
+            </StatsGrid>
+          </ContentWrapper>
+
+          <ImageWrapper
+            initial={{ opacity: 0, x: 100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
           >
-            Luxury Tirs is a <HighlightText>personal brand</HighlightText> focused on innovation and 
-            futuristic design. We combine cutting-edge technology with stunning aesthetics to create 
-            unforgettable experiences.
-          </AboutText>
-
-          <AboutText
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            With expertise in <HighlightText>digital design</HighlightText>,{" "}
-            <HighlightText>branding strategy</HighlightText>, and <HighlightText>web development</HighlightText>,
-            we help our clients stand out in the competitive digital world. Our vision is to create 
-            strong and memorable identities that reflect your values and aspirations.
-          </AboutText>
-
-          <AboutText
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            We believe that powerful personal branding is a blend of{" "}
-            <HighlightText>authenticity</HighlightText> and <HighlightText>innovation</HighlightText>. 
-            With Luxury Tirs, you'll discover a digital identity that truly reflects your essence.
-          </AboutText>
-        </AboutContent>
-
-        <AboutImage
-          initial={{ opacity: 0, x: 50 }}
-          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
-          transition={{ duration: 0.8 }}
-        >
-          <img src="images/alexander-andrews-anUOLC3zMD4-unsplash.jpg?height=500&width=400" alt="Luxury Tirs" />
-        </AboutImage>
-      </AboutContainer>
+            <Image style={{ y }} />
+          </ImageWrapper>
+        </Grid>
+      </Container>
     </AboutSection>
   )
 }

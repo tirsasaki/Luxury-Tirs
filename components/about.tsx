@@ -19,8 +19,8 @@ const Container = styled.div`
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 40px;
   align-items: center;
 
   @media (max-width: 968px) {
@@ -44,10 +44,17 @@ const Title = styled(motion.h2)`
 `
 
 const Description = styled(motion.p)`
-  font-size: 1.1rem;
-  line-height: 1.8;
+  font-size: 1rem;
+  line-height: 1.7;
   opacity: 0.8;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
+  max-width: 580px;
+
+  @media (max-width: 968px) {
+    font-size: 0.95rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
 `
 
 const StatsGrid = styled.div`
@@ -69,57 +76,52 @@ const StatBox = styled(motion.div)`
   border: 1px solid rgba(255, 255, 255, 0.1);
 
   h3 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: ${props => props.theme.colors.red};
     margin-bottom: 0.5rem;
   }
 
   p {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     opacity: 0.7;
   }
 `
 
 const ImageWrapper = styled(motion.div)`
   position: relative;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
   
   &:before {
     content: '';
     position: absolute;
-    top: -20px;
-    left: -20px;
-    right: -20px;
-    bottom: -20px;
+    top: -15px;
+    left: -15px;
+    right: -15px;
+    bottom: -15px;
     border: 2px solid ${props => props.theme.colors.red};
     opacity: 0.1;
-    border-radius: 20px;
+    border-radius: 15px;
   }
 `
 
-const Image = styled(motion.div)`
+const IllustrationContainer = styled(motion.div)`
   width: 100%;
-  height: 500px;
-  background: linear-gradient(
-    45deg,
-    ${props => props.theme.colors.red}22,
-    ${props => props.theme.colors.darkBlue}22
-  );
-  border-radius: 10px;
-  overflow: hidden;
+  height: 400px;
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  &:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-      45deg,
-      transparent,
-      rgba(255, 255, 255, 0.1)
-    );
+  @media (max-width: 968px) {
+    height: 300px;
+  }
+
+  svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.1));
   }
 `
 
@@ -172,20 +174,20 @@ const BrandingGrid = styled.div`
 
 const BrandingCard = styled(motion.div)`
   background: rgba(255, 255, 255, 0.03);
-  padding: 25px;
-  border-radius: 15px;
+  padding: 20px;
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
 
   h4 {
-    font-size: 1.3rem;
-    margin-bottom: 15px;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
     color: ${props => props.theme.colors.white};
   }
 
   p {
-    font-size: 0.95rem;
-    line-height: 1.7;
+    font-size: 0.9rem;
+    line-height: 1.6;
     opacity: 0.7;
   }
 `
@@ -196,16 +198,16 @@ export default function About() {
 
   const brandingPoints = [
     {
-      title: "Innovative Design",
-      description: "Merging cutting-edge aesthetics with functional excellence to create unique digital experiences that stand out."
+      title: "Design Innovation",
+      description: "Creating unique digital experiences that leave lasting impressions."
     },
     {
-      title: "Strategic Vision",
-      description: "Crafting compelling brand narratives that resonate with your audience and drive meaningful engagement."
+      title: "Brand Strategy",
+      description: "Building compelling narratives that connect with your audience."
     },
     {
-      title: "Digital Excellence",
-      description: "Leveraging advanced technologies to build powerful, future-proof digital solutions."
+      title: "Digital Solutions",
+      description: "Implementing cutting-edge technology for future-ready platforms."
     }
   ]
 
@@ -228,11 +230,11 @@ export default function About() {
             </SubHeading>
             
             <Title>
-              Elevating Digital <span>Presence</span>
+              Elevating <span>Digital Presence</span>
             </Title>
 
             <Description>
-              At <Highlight>Luxury Tirs</Highlight>, we believe in transforming digital visions into extraordinary realities. Our mission is to craft distinctive digital experiences that capture attention, drive engagement, and create lasting impact in the digital landscape.
+              At <Highlight>Luxury Tirs</Highlight>, we transform digital visions into extraordinary realities. Our passion lies in crafting distinctive experiences that capture attention and drive meaningful engagement.
             </Description>
 
             <BrandingGrid>
@@ -299,7 +301,80 @@ export default function About() {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <Image style={{ y }} />
+            <IllustrationContainer>
+              <motion.svg
+                viewBox="0 0 400 400"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
+              >
+                {/* Background Circle */}
+                <motion.circle
+                  cx="200"
+                  cy="200"
+                  r="180"
+                  fill="none"
+                  stroke="rgba(255,0,0,0.1)"
+                  strokeWidth="2"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 2, ease: "easeInOut" }}
+                />
+
+                {/* Digital Elements */}
+                <motion.path
+                  d="M100,200 L300,200 M200,100 L200,300"
+                  stroke="rgba(255,255,255,0.2)"
+                  strokeWidth="2"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 1.5, delay: 0.5 }}
+                />
+
+                {/* Ascending Steps */}
+                {[0, 1, 2, 3].map((i) => (
+                  <motion.rect
+                    key={i}
+                    x={140 + i * 40}
+                    y={250 - i * 30}
+                    width="30"
+                    height={30 + i * 30}
+                    fill={`rgba(255,0,0,${0.1 + i * 0.1})`}
+                    initial={{ scaleY: 0 }}
+                    animate={{ scaleY: 1 }}
+                    transition={{ duration: 0.5, delay: i * 0.2 }}
+                  />
+                ))}
+
+                {/* Floating Icons */}
+                <motion.g
+                  animate={{
+                    y: [-10, 10, -10],
+                    rotate: [0, 5, 0],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <circle cx="150" cy="150" r="15" fill="rgba(255,0,0,0.3)" />
+                  <circle cx="250" cy="150" r="10" fill="rgba(0,0,139,0.3)" />
+                  <rect x="190" y="130" width="20" height="20" fill="rgba(255,255,255,0.2)" transform="rotate(45 200 140)" />
+                </motion.g>
+
+                {/* Rising Arrow */}
+                <motion.path
+                  d="M200,220 L200,140 L170,170 M200,140 L230,170"
+                  stroke="rgba(255,0,0,0.5)"
+                  strokeWidth="3"
+                  fill="none"
+                  initial={{ y: 50, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ duration: 1, delay: 1 }}
+                />
+              </motion.svg>
+            </IllustrationContainer>
           </ImageWrapper>
         </Grid>
       </Container>
